@@ -10,7 +10,7 @@ namespace la_mia_pizzeria_static
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
-
+            builder.Services.AddScoped<ICustomLogger, CustomConsoleLogger>();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {

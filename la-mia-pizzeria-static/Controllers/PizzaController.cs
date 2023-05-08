@@ -5,8 +5,14 @@ namespace la_mia_pizzeria_static.Controllers
 {
     public class PizzaController : Controller
     {
+        private ICustomLogger _logger { get; set; }
+        public PizzaController(ICustomLogger logger)
+        {
+            _logger = logger;
+        }
         public IActionResult Index()
         {
+            _logger.WriteLog("Index page");
             using (PizzaContext pz = new PizzaContext()) {
                 List<Pizza> list = pz.Pizzas.ToList();
                 if (list == null)

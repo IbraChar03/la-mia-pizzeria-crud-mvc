@@ -19,11 +19,10 @@
                     <p class="card-text">@pizza.Description</p>
                     <p class="card-text">@pizza.Price$</p>
                         <a href="@Url.Action("Edit", "Pizza", new {id= pizza.Id})" class="btn btn-primary mb-3">Edit</a>
-                        <a href="@Url.Action("Delete", "Pizza", new {id= pizza.Id})" class="btn btn-primary mb-3">Delete</a>
-                      @*  <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
+                      <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
 
                             <input type = "submit" value="Delete"/>
-                        </form>*@
+                        </form>
                     <a href="@Url.Action("Details", "Pizza", new {id= pizza.Id})" class="btn btn-primary">Details</a>
                 </div>
             </div>
