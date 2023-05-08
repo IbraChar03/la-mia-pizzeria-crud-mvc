@@ -1,0 +1,32 @@
+﻿@model List<Pizza>
+
+<div class="text-center">
+    <a href="@Url.Action("Create", "Pizza")" class="btn btn-primary mt-5">Create a new pizza</a>
+    <div class="cont mt-5">
+      
+        @if(Model.Count == 0)
+        {
+            <div>There aren't pizzas at the moment, try later. </div>
+        }
+        else
+        {
+            @foreach(var pizza in Model)
+        {
+            <div class="card" style="width: 18rem;">
+                <img src=@pizza.Image />
+                <div class="card-body">
+                    <h5 class="card-title">@pizza.Name</h5>
+                    <p class="card-text">@pizza.Description</p>
+                    <p class="card-text">@pizza.Price$</p>
+                        <a href="@Url.Action("Edit", "Pizza", new {id= pizza.Id})" class="btn btn-primary mb-3">Edit</a>
+                    <a href="@Url.Action("Details", "Pizza", new {id= pizza.Id})" class="btn btn-primary">Details</a>
+                </div>
+            </div>
+        }
+            
+        }
+        
+       
+    </div>
+
+</div>

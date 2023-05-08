@@ -1,0 +1,32 @@
+﻿@model Pizza
+
+<div class="container">
+
+    <form asp-controller = "Pizza" asp-action="Create" method="post" novalidate>
+
+        <div class="mb-3">
+            <label>Name : </label>
+            <input asp-for="Name" class="d-block w-100" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label>Description : </label>
+            <input asp-for="Description" class="d-block w-100" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+ 
+        <div class="mb-3">
+            <label>Price : </label>
+            <input asp-for="Price"  class="d-block w-100" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label>Image : </label>
+            <input asp-for="Image" class="d-block w-100" />
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+        <div class="text-end">
+            <input type="submit" class="btn btn-small btn-info" value="Create">
+        </div>
+    </form>
+</div>
