@@ -69,7 +69,9 @@ namespace la_mia_pizzeria_static.Controllers
                 {
                     return View("Edit");
                 }
-               Pizza pz = ctx.Pizzas.Where(p => p.Id == pizza.Id).First();
+               Pizza pz = ctx.Pizzas.Where(p => p.Id == pizza.Id).FirstOrDefault();
+                if (pz == null)
+                    return NotFound();
                 pz.Image = pizza.Image;
                 pz.Name = pizza.Name;
                 pz.Description = pizza.Description;
@@ -81,6 +83,21 @@ namespace la_mia_pizzeria_static.Controllers
             }
 
 
+        }
+        public IActionResult Delete(int id)
+        {
+            using(PizzaContext ctx = new PizzaContext())
+            {
+               Pizza pz = ctx.Pizzas.Where(p => p.Id == id).FirstOrDefault();
+                if(pz == null)
+                    return NotFound();
+                ctx.Pizzas.Remove(pz);
+                ctx.SaveChanges();
+                return RedirectToAction("index");
+                
+
+
+            }
         }
 
 
