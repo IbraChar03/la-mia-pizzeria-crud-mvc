@@ -1,5 +1,6 @@
 ﻿using la_mia_pizzeria_static.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_static.Controllers
 {
@@ -26,19 +27,26 @@ namespace la_mia_pizzeria_static.Controllers
         {
             using (PizzaContext pz = new PizzaContext())
             {
-                Pizza pizza = pz.Pizzas.Where(p => p.Id == id).FirstOrDefault();
+                Pizza pizza = pz.Pizzas.Where(p => p.Id == id).Include(p => p.Category).FirstOrDefault();
                 return View(pizza);
             }
         }
 
         public IActionResult Create()
         {
-
-            return View();
+            using(PizzaContext pz = new PizzaContext())
+            {
+                PizzaFormModel model = new PizzaFormModel();
+                var categories = pz.Categories.ToList();
+                model.Categories = categories;
+                model.Pizza = new Pizza();
+                return View(model);
+            }
+           
 
         }
         [HttpPost]
-        public IActionResult Create(Pizza data)
+        public IActionResult Create(PizzaFormModel data)
         {
 
             if(!ModelState.IsValid)
@@ -47,7 +55,7 @@ namespace la_mia_pizzeria_static.Controllers
             }
             using (PizzaContext context = new PizzaContext())
             {
-                Pizza pz = new Pizza { Name = data.Name, Description = data.Description, Image = data.Image, Price = data.Price };
+                Pizza pz = new Pizza { Name = data.Pizza.Name, Description = data.Pizza.Description, Image = data.Pizza.Image, Price = data.Pizza.Price, CategoryId = data.Pizza.CategoryId };
                 context.Pizzas.Add(pz);
                 context.SaveChanges();
                 return RedirectToAction("Index");

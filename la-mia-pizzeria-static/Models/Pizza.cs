@@ -12,5 +12,7 @@ namespace la_mia_pizzeria_static.Models
         [Required][StringLength(45, MinimumLength = 10)] [FiveWords] public string Description { get; set; }
         [Required] [Range(1,100)] public double Price { get; set; }
         [Required] [Url] public string Image { get; set; }
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
