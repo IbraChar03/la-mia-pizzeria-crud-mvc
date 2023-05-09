@@ -51,7 +51,13 @@ namespace la_mia_pizzeria_static.Controllers
 
             if(!ModelState.IsValid)
             {
-                return View("Create", data);
+                using (PizzaContext pz = new PizzaContext())
+                {
+                    var categories = pz.Categories.ToList();
+                    data.Categories = categories;
+                    return View("Create", data);
+                }
+                    
             }
             using (PizzaContext context = new PizzaContext())
             {
@@ -67,29 +73,36 @@ namespace la_mia_pizzeria_static.Controllers
             using(PizzaContext ctx = new PizzaContext())
             {
                 Pizza pizza = ctx.Pizzas.Where(p => p.Id == id).First();
+                var categories = ctx.Categories.ToList();
+                PizzaFormModel form = new PizzaFormModel();
+                form.Pizza = pizza;
+                form.Categories = categories;
 
-            return View(pizza);
+            return View(form);
             }
        
 
         }
 
         [HttpPost]
-        public IActionResult Edit(Pizza pizza)
+        public IActionResult Edit(int id,PizzaFormModel data)
         {
             using (PizzaContext ctx = new PizzaContext())
             {
                if(!ModelState.IsValid)
                 {
-                    return View("Edit");
+                    var categories = ctx.Categories.ToList();
+                    data.Categories = categories;
+                    return View("Edit",data);
                 }
-               Pizza pz = ctx.Pizzas.Where(p => p.Id == pizza.Id).FirstOrDefault();
+               Pizza pz = ctx.Pizzas.Where(p => p.Id == id).FirstOrDefault();
                 if (pz == null)
                     return NotFound();
-                pz.Image = pizza.Image;
-                pz.Name = pizza.Name;
-                pz.Description = pizza.Description;
-                pz.Price = pizza.Price;
+                pz.Image = data.Pizza.Image;
+                pz.Name = data.Pizza.Name;
+                pz.Description = data.Pizza.Description;
+                pz.Price =data.Pizza.Price;
+                pz.CategoryId = data.Pizza.CategoryId;
                 ctx.Pizzas.Update(pz);
                 ctx.SaveChanges();
 
