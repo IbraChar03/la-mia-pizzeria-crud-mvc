@@ -6,6 +6,13 @@
             <h5 class="card-title">@Model.Name</h5>
             <p class="card-text">@Model.Description</p>
             <p class="card-text">@Model.Price$</p>
+            <p class="card-text">@Model.Category.Name</p>
+            <ul>
+            @foreach(Ingredient ing in Model.Ingredients)
+            {
+                <li>@ing.Name</li>
+            }
+            </ul>
             <a href="#" class="btn btn-primary">Buy</a>
         </div>
     </div>
